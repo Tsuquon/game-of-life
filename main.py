@@ -1,35 +1,66 @@
 rows, cols = (5, 5)
 grid = [[0 for i in range(cols)] for j in range(rows)]
-grid[2][2] = 1; grid[2][3] = 1; grid[1][2] = 1; grid[0][0] = 1
+grid[3][1] = 1; grid[2][2] = 1; grid[2][3] = 1; grid[1][2] = 1; grid[0][0] = 1
 for rows in grid:
     print(rows)
 
+# establish a class for each index then use a counter for each to count its neighbours
+# Use trys and exceptions for border numbers
 
-# Machine needs to run through all numbers before making a change
-for i, row in enumerate(grid):
-    for j, val in enumerate(row):
-        if val == 1:
-            if (grid[i-1][j-1] == 1) + (grid[i-1][j] == 1) + (grid[i-1][j+1] == 1) + (grid[i][j-1] == 1) + \
-                    (grid[i][j+1] == 1) + (grid[i+1][j-1] == 1) + \
-                    (grid[i+1][j] == 1) + (grid[i+1][j+1] == 1) != 2 and 3:
-                grid[i][j] = 0
-        # elif val == 0:
-        #     if (grid[i - 1][j - 1] == 1) + (grid[i - 1][j] == 1) + (grid[i - 1][j + 1] == 1) + (grid[i][j - 1] == 1) + \
-        #             (grid[i][j + 1] == 1) + (grid[i + 1][j - 1] == 1) + \
-        #             (grid[i + 1][j] == 1) + (grid[i + 1][j + 1] == 1) == 3:
-        #         grid[i][j] = 1
+class IndividualIndex():
+
+    def __init__(self, i, j):  # Change the if grid... to individual lines that add to a count and if that count doesn't equal two or three then change the number to zero. This code has to run through all the numbers. Add tries and exceptions (WIP)
+        self.count = 0
+        self.i = i
+        self.j = j
+        if grid[i][j] == 1:
+            try:
+                if grid[i-1][j-1] == 1:
+                    self.count += 1
+            except:
+                pass
+            try:
+                if grid[i-1][j] == 1:
+                    self.count += 1
+            except:
+                pass
+                if grid[i-1][j+1] == 1:
+                    self.count += 1
+            try:
+                if grid[i][j-1] == 1:
+                    self.count += 1
+            except:
+                pass
+            try:
+                if grid[i][j+1] == 1:
+                    self.count += 1
+            except:
+                pass
+            try:
+                if grid[i+1][j-1] == 1:
+                    self.count += 1
+            except:
+                pass
+            try:
+                if grid[i+1][j] == 1:
+                    self.count += 1
+            except:
+                pass
+            try:
+                if grid[i+1][j+1] == 1:
+                    self.count += 1
+            except:
+                pass
+
+            print(self.count)
+        if self.count != 2 and self.count != 3:  # This has to go on the outside of this function
+            grid[i][j] = 0
+
+if __name__ == "__main__":
+    IndividualIndex(3, 1)
+    IndividualIndex(0, 0)
+    print("\n")
+    for rows in grid:
+        print(rows)
 
 
-
-
-print("\n")
-for rows in grid:
-    print(rows)
-            # print(i, j)
-
-
-
-
-
-# if grid[2][1] == 1:
-#     print("hello")
