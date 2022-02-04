@@ -1,6 +1,6 @@
 rows, cols = (5, 5)
 grid = [[0 for i in range(cols)] for j in range(rows)]
-grid[3][1] = 1; grid[2][2] = 1; grid[2][3] = 1; grid[1][2] = 1; grid[0][0] = 1; grid[4][0] = 1;  # grid[1][3] = 1;
+grid[3][1] = 1; grid[2][2] = 1; grid[2][3] = 1; grid[1][2] = 1; grid[0][0] = 1; grid[4][0] = 1; grid[4][2] = 1;
 
 # establish a class for each index then use a counter for each to count its neighbours
 # Use trys and exceptions for border numbers
@@ -25,40 +25,85 @@ class IndividualIndex():
                         except:
                             pass
 
-            print(self.count)  # Checks that the loop is detecting and adding properly - debugging
-        else:  # make this one count if its a zero
-            pass
-        self.change()
+            #print(self.count)  # Checks that the loop is detecting and adding properly - debugging
+
+        elif grid[self.i][self.j] == 0:
+            #  print(self.count)
+            for i_iter in [-1, 0, 1]:
+                for j_iter in [-1, 0, 1]:
+                    if abs(i_iter) + abs(j_iter) != 0:
+                        try:
+                            if grid[self.i+i_iter][self.j+j_iter] == 1:  # counts neighbours which are one
+                                if self.i+i_iter >= 0 and self.j+j_iter >= 0:
+                                        self.count += 1
+
+                        except:
+                            pass
+
+            return self.count
+            # print(self.count)  # Checks that the loop is detecting and adding properly - debugging
+
 
 
     def change(self):
-        if self.count != 2 and self.count != 3:  # This has to go on the outside of this function
-            grid[self.i][self.j] = 0
-        else:
-            grid[self.i][self.j] = 1
+        if grid[self.i][self.j] == 1:
+            if self.count != 2 and self.count != 3:
+                grid[self.i][self.j] = 0
+        if grid[self.i][self.j] == 0:
+            if self.count == 3:
+                grid[self.i][self.j] = 1
+
+    def measure(self):
+        return print(self.count)
+
 
 if __name__ == "__main__":
     for rows in grid:
         print(rows)
 
+    # name = IndividualIndex(0, 1)
+    # name.counting()
+    # name.measure()
+
+    dict = {}
     for down in range(5):
         for right in range(5):
-            name = IndividualIndex(down, right)
-            name.counting()
+            key = str("grid" + str(down) + str(right))
+            dict[key] = IndividualIndex(down, right)
 
+    # print(dict)
+    for down in range(5):
+        for right in range(5):
+            dict[f'grid{down}{right}'].counting()
+            # dict[f'grid{down}{right}'].measure()
+
+    for down in range(5):
+        for right in range(5):
+            dict[f'grid{down}{right}'].change()
+            # dict[f'grid{down}{right}'].measure()
+
+    # for key, value in dict.items():
+    #     exec(f'{key} = {value}')
     # for down in range(5):
     #     for right in range(5):
-    #         name.change()
-            # f"variable{down}{right}".counting()
-            # f"variable{down}{right}".change()
+    #         f'grid{down}{right}'
 
-    # grid00 = IndividualIndex(0, 0)
-    # grid00.counting()
-    # grid31 = IndividualIndex(3, 1)
-    # grid31.counting()
-    # grid23 = IndividualIndex(2, 3)
-    # grid23.counting()
-    # grid00.change()
+    # for down in range(5):  # Test mechanism to see if neighbours still detect.
+    #     for right in range(5):
+    #         name = IndividualIndex(down, right)
+    #         name.counting()
+    #         name.measure()
+    #
+    # print("\n")
+    # for loop in range(25):
+    #     print(name.measure())
+    #     name.change()
+
+
+
+
+
+
 
     print("\n")
     for rows in grid:
