@@ -1,13 +1,9 @@
-rows, cols = (5, 5)
-grid = [[0 for i in range(cols)] for j in range(rows)]
-grid[3][1] = 1; grid[2][2] = 1; grid[2][3] = 1; grid[1][2] = 1; grid[0][0] = 1; grid[4][0] = 1; grid[4][2] = 1;
+import time
 
-# establish a class for each index then use a counter for each to count its neighbours
-# Use trys and exceptions for border numbers
 
-class IndividualIndex():
+class IndividualIndex:
 
-    def __init__(self, i, j):  # Change the if grid... to individual lines that add to a count and if that count doesn't equal two or three then change the number to zero. This code has to run through all the numbers. Add tries and exceptions (WIP)
+    def __init__(self, i, j):
         self.count = 0
         self.i = i
         self.j = j
@@ -40,10 +36,7 @@ class IndividualIndex():
                         except:
                             pass
 
-            return self.count
             # print(self.count)  # Checks that the loop is detecting and adding properly - debugging
-
-
 
     def change(self):
         if grid[self.i][self.j] == 1:
@@ -58,54 +51,54 @@ class IndividualIndex():
 
 
 if __name__ == "__main__":
+    rows, cols = (15, 15)
+    grid = [[0 for i in range(cols)] for j in range(rows)]
+
+    def arrow():  # Standard arrow formation - moves on its own
+        grid[7][7] = 1; grid[8][8] = 1; grid[9][6] = 1; grid[9][7] = 1; grid[9][8] = 1
+
+    def A_for_all():  # A for all - cyclical
+        grid[2][6] = 1; grid[2][7] = 1
+        grid[3][5] = 1; grid[3][8] = 1
+        grid[4][5] = 1; grid[4][6] = 1; grid[4][7] = 1; grid[4][8] = 1
+        grid[5][3] = 1; grid[5][5] = 1; grid[5][8] = 1; grid[5][10] = 1
+        grid[6][2] = 1; grid[6][11] = 1
+        grid[7][2] = 1; grid[7][11] = 1
+        grid[8][3] = 1; grid[8][5] = 1; grid[8][8] = 1; grid[8][10] = 1
+        grid[9][5] = 1; grid[9][6] = 1; grid[9][7] = 1; grid[9][8] = 1
+        grid[10][5] = 1; grid[10][8] = 1
+        grid[11][6] = 1; grid[11][7] = 1
+
+    selection = input("pick a. arrow or b. A for all ")
+    if selection == "a":
+        arrow()
+    elif selection == "b":
+        A_for_all()
+
+    iterations = input("How many iterations? ")
+
     for rows in grid:
         print(rows)
 
-    # name = IndividualIndex(0, 1)
-    # name.counting()
-    # name.measure()
+    time.sleep(1)
 
     dict = {}
-    for down in range(5):
-        for right in range(5):
-            key = str("grid" + str(down) + str(right))
-            dict[key] = IndividualIndex(down, right)
+    for repeats in range(int(iterations)):
+        for down in range(15):
+            for right in range(15):
+                key = str("grid" + str(down) + str(right))
+                dict[key] = IndividualIndex(down, right)
+                dict[f'grid{down}{right}'].counting()
 
     # print(dict)
-    for down in range(5):
-        for right in range(5):
-            dict[f'grid{down}{right}'].counting()
-            # dict[f'grid{down}{right}'].measure()
+        for down in range(15):
+            for right in range(15):
+                dict[f'grid{down}{right}'].change()
+                # dict[f'grid{down}{right}'].measure()
 
-    for down in range(5):
-        for right in range(5):
-            dict[f'grid{down}{right}'].change()
-            # dict[f'grid{down}{right}'].measure()
+        print("\n")
+        for rows in grid:
+            print(rows)
+        time.sleep(1)
 
-    # for key, value in dict.items():
-    #     exec(f'{key} = {value}')
-    # for down in range(5):
-    #     for right in range(5):
-    #         f'grid{down}{right}'
-
-    # for down in range(5):  # Test mechanism to see if neighbours still detect.
-    #     for right in range(5):
-    #         name = IndividualIndex(down, right)
-    #         name.counting()
-    #         name.measure()
-    #
-    # print("\n")
-    # for loop in range(25):
-    #     print(name.measure())
-    #     name.change()
-
-
-
-
-
-
-
-    print("\n")
-    for rows in grid:
-        print(rows)
 
